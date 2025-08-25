@@ -8,7 +8,7 @@ from tensorflow.keras.preprocessing import image
 app = Flask(__name__)
 
 # Load trained model
-MODEL_PATH = "saved_models/best_model.h5"
+MODEL_PATH = "Saved_Models/final_model.h5"
 model = load_model(MODEL_PATH)
 
 # Class labels (adjust based on your dataset)
@@ -45,6 +45,19 @@ def index():
             return render_template("index.html", prediction=result, image_path=filepath)
 
     return render_template("index.html", prediction=None, image_path=None)
+
+
+@app.route("/predict", methods=["POST"])
+def predict_api():
+    file = request.files.get("file")
+    if not file:
+        return {"error": "No file uploaded"}, 400
+
+    filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
+    file.save(filepath)
+    prediction = predict_image(filepath)
+
+    return {"prediction": prediction}
 
 
 if __name__ == "__main__":
