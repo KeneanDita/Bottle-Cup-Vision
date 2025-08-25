@@ -27,14 +27,14 @@
 BottleCupVision/
 │
 ├── data/               # Dataset (train/val/test folders)
-├── notebooks/          # Exploration notebook with training and evaluation
-│   └── exploration.ipynb
-├── src/                # Modular source code for data, model, training
-├── saved_models/       # Trained models (best_model.h5, final_model/)
-├── results/            # Saved plots (training curves, confusion matrix, predictions)
-├── templates/          # Flask HTML templates
-├── static/             # Uploaded images
+├── Training_notebook.ipynb     # Exploration notebook with training and evaluation
+├── saved_models/   # Trained models (best_model.h5, final_model/)
+├── results/         # Saved plots (training curves, confusion matrix, predictions)
+├── templates/       # Flask HTML templates
+├── static/          # Uploaded images
 ├── app.py              # Flask web app
+├── Dockerfile    # for containerization
+├── LICENSE  # MIT license
 ├── requirements.txt    # Python dependencies
 └── README.md
 ```
@@ -100,11 +100,35 @@ python app.py
 
 * Access: `http://127.0.0.1:5000/`
 
+### REST API
+
+Supports POST requests with images (multipart/form-data) for predictions.
+
+Example endpoint: POST http://127.0.0.1:5000/predict
+
+Example request using Postman or curl:
+
+```C
+curl -X POST -F "file=@/path/to/image.jpg" http://127.0.0.1:5000/predict
+```
+
+Response (JSON):
+
+``` Re
+{
+  "prediction": "Bottle"
+}
+```
+
+Future expansion: GET endpoints for metadata, health checks, or batch predictions.
+
+This allows both interactive users and programmatic clients to use the model easily.
+
 ## Docker Image
 
 You can also run BottleCupVision via Docker:
 
-[![Docker Image](https://img.shields.io/badge/Docker-Container-blue)](https://hub.docker.com/repository/docker/yourusername/bottlecupvision)
+[![Docker Image](https://img.shields.io/badge/Docker-Container-blue)](https://hub.docker.com/repository/docker/keneandita/bottlecupvision/general?editCategory=true)
 
 ## Future Enhancements(Rare)
 
